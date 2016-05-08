@@ -18,7 +18,7 @@ Mat createImage(int height, int width)
     return image;
 }
 
-void getLabels(Mat &data, vector<vector<int>> &label)
+void getLabels(Mat &data, vector< vector<int> > &label)
 /*
         This function outputs a 2d vector label which 
         has information about label of each pixel
@@ -26,26 +26,27 @@ void getLabels(Mat &data, vector<vector<int>> &label)
 {
     for (int i = 0; i < data.rows; ++i)
     {
+        label.push_back(vector<int>());
         for (int j = 0; j < data.cols; ++j)
         {
             Vec3b &Color = data.at<Vec3b>(Point(i, j));
 
-            if (Color[0] == 0 && Color[1] == 255 && Color[0] == 255) // Yellow pixel
-                label[i][j] = 0;
+            if (Color[0] == 0 && Color[1] == 255 && Color[2] == 255) // Yellow pixel
+                label[i].push_back(0);
 
             else if (Color[0] == 0 && Color[1] == 255 && Color[2] == 0) // GREEN pixel
-                label[i][j] = 1;
+                label[i].push_back(1);
 
             else if (Color[0] == 0 && Color[1] == 0 && Color[2] == 255) // RED pixel
-                label[i][j] = 1;
+                label[i].push_back(2);
 
             else // BLACK pixel
-                label[i][j] = -1;
+                label[i].push_back(-1);
         }
     }
 }
 
-string getExamples(Mat image, vector<vector<int>> label)
+string getExamples(Mat image, vector< vector<int> > label)
 /*
         This function outputs a string which contains examples
         for boosting algorithm based on H, S, V, and Labels
@@ -84,17 +85,17 @@ string getExamples(Mat image, vector<vector<int>> label)
     return example;
 }
 
-void generateTrainFile(vector<string> examples)
+void generateTrainFile(string filename,string examples)
 /*
         This function writes all strings into one train file for boosting	
  */
 {
-    ofstream trainfile("buoy.train");
+    ofstream trainfile(filename.c_str());
 
     if (trainfile.is_open())
     {
-        for (vector<string>::iterator i = examples.begin(); i != examples.end(); ++i)
-            trainfile << *i;
+        
+        trainfile << examples;
 
         trainfile.close();
     }

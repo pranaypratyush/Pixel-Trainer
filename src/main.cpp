@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "helper.cpp"
 
 using namespace std;
 using namespace cv;
@@ -22,6 +23,7 @@ using namespace cv;
  * 
  */
 bool lbutton = 0;
+string filename;
 //bool ctrl_key_state=0;
 Mat *dataptr;
 
@@ -57,10 +59,16 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
             circle(*dataptr, Point(x, y), 4, Scalar(0, 255, 0), -1);
         }
     }
+}
 
-
-
-
+void saveCallback(int state, void *userdata)
+{
+    Mat *image = (Mat*) userdata;
+    vector< vector<int> > labels;
+    getLabels(*dataptr,labels);
+    
+    generateTrainFile(filename, getExamples(*image,labels));
+    
 }
 
 int main(int argc, char** argv)
@@ -73,6 +81,8 @@ int main(int argc, char** argv)
 
     Mat image;
     image = imread(argv[1], CV_LOAD_IMAGE_COLOR); // Read the file
+    filename = argv[1];
+    filename += ".txt";
     Mat data(image.rows, image.cols, CV_8UC3);
     dataptr = &data;
     if (!image.data) // Check for invalid input
@@ -92,7 +102,7 @@ int main(int argc, char** argv)
     imshow("Denoised image", denoised);
 //    namedWindow("Data",1);
         
-    cvCreateButton("Save",NULL,NULL);
+    cvCreateButton("Save",saveCallback,&denoised);
     while (1)
     {
         imshow("Denoised image", denoised);

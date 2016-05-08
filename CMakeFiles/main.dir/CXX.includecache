@@ -6,6 +6,20 @@
 
 #IncludeRegexTransform: 
 
+/home/pranay/Desktop/OpencvProject/src/helper.cpp
+iostream
+-
+opencv2/opencv.hpp
+-
+sstream
+-
+fstream
+-
+vector
+-
+algorithm
+-
+
 /home/pranay/Desktop/OpencvProject/src/main.cpp
 cstdlib
 -
@@ -13,4 +27,6 @@ opencv2/opencv.hpp
 -
 opencv2/highgui/highgui.hpp
 -
+helper.cpp
+/home/pranay/Desktop/OpencvProject/src/helper.cpp
 
