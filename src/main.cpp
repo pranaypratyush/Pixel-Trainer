@@ -24,6 +24,7 @@ using namespace cv;
  */
 bool lbutton = 0;
 string filename;
+Mat denoised;
 //bool ctrl_key_state=0;
 Mat *dataptr;
 
@@ -42,7 +43,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
     }
     else if (event == EVENT_MOUSEMOVE)
     {
-        cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
+//        cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
         if (flags == EVENT_FLAG_CTRLKEY) //yellow
         {
             circle(*image, Point(x, y), 4, Scalar(0, 255, 255), -1);
@@ -71,6 +72,14 @@ void saveCallback(int state, void *userdata)
 
 }
 
+void clearCallback(int state, void *userdata)
+{
+    Mat *image = (Mat*) userdata;
+    denoised.copyTo(*image);
+    Mat newimage(image->rows, image->cols, CV_8UC3);
+    *dataptr = newimage;
+}
+
 int main(int argc, char** argv)
 {
     if (argc != 2)
@@ -82,7 +91,7 @@ int main(int argc, char** argv)
     Mat image;
     image = imread(argv[1], CV_LOAD_IMAGE_COLOR); // Read the file
     filename = argv[1];
-    filename += ".txt";
+    
     Mat data(image.rows, image.cols, CV_8UC3);
     dataptr = &data;
     if (!image.data) // Check for invalid input
@@ -94,18 +103,20 @@ int main(int argc, char** argv)
     //    namedWindow("Display window", WINDOW_AUTOSIZE); // Create a window for display.
     //    imshow("Display window", image); // Show our image inside it.
 
-    Mat denoised;
+    
     fastNlMeansDenoisingColored(image, denoised);
-
+    Mat displayedMat;
+    denoised.copyTo(displayedMat);
     namedWindow("Denoised image", 1);
-    setMouseCallback("Denoised image", CallBackFunc, &denoised);
+    setMouseCallback("Denoised image", CallBackFunc, &displayedMat);
     imshow("Denoised image", denoised);
     //    namedWindow("Data",1);
 
-    cvCreateButton("Save", saveCallback, &denoised);
+    cvCreateButton("Save", saveCallback, &displayedMat);
+    cvCreateButton("Clear",clearCallback,&displayedMat);
     while (1)
     {
-        imshow("Denoised image", denoised);
+        imshow("Denoised image", displayedMat);
         //        imshow("Data",data);
         if (waitKey(100) == 27)
             break;

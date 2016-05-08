@@ -26,21 +26,22 @@ void getLabels(Mat &data, vector< vector<int> > &label)
 {
     for (int i = 0; i < data.rows; ++i)
     {
+        label.push_back(vector<int>());
         for (int j = 0; j < data.cols; ++j)
         {
             Vec3b &Color = data.at<Vec3b>(Point(i, j));
 
-            if (Color[0] == 0 && Color[1] == 255 && Color[0] == 255) // Yellow pixel
-                label[i][j] = 0;
+            if (Color[0] == 0 && Color[1] == 255 && Color[2] == 255) // Yellow pixel
+                label[i].push_back(0);
 
             else if (Color[0] == 0 && Color[1] == 255 && Color[2] == 0) // GREEN pixel
-                label[i][j] = 1;
+                label[i].push_back(1);
 
             else if (Color[0] == 0 && Color[1] == 0 && Color[2] == 255) // RED pixel
-                label[i][j] = 1;
+                label[i].push_back(2);
 
             else // BLACK pixel
-                label[i][j] = -1;
+                label[i].push_back(-1);
         }
     }
 }
@@ -51,6 +52,7 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
         text file	
  */
 {
+    filename += ".txt";
     ofstream trainfile(filename.c_str());
     if (!trainfile.is_open())
         cout << "Error opening " << filename << ".txt file";
@@ -67,28 +69,34 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
             {
                 example = "";
 
-                Vec3b hsv = hsv_image.at<Vec3b>(Point(i, j));
+                Vec3b hsv = hsv_image.at<Vec3b>(i, j);
+                ss.str("");
 
                 ss << label[i][j];
                 example += ss.str(); // Append label
                 example += ",";
+                ss.str("");
 
-                ss << hsv[0];
+                ss << (int)hsv[0];
                 example += ss.str(); // Append H value
                 example += ",";
+                ss.str("");
 
-                ss << hsv[1];
+                ss << (int)hsv[1];
                 example += ss.str(); // Append S value
                 example += ",";
-
-                ss << hsv[2];
+                ss.str("");
+                
+                ss << (int)hsv[2];
                 example += ss.str(); // Append V value
                 example += ";";
-
+//                ss.str("");
+                
                 example += "\n";
 
                 trainfile << example;
             }
+            cout << "i ="<<i<<" finished"<<endl;
         }
         trainfile.close();
     }
