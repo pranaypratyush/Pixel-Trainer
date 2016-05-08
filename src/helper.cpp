@@ -18,7 +18,7 @@ Mat createImage(int height, int width)
 	return image;
 }
 
-void getLabels(Mat &data, vector<vector<int>> &label)
+void getLabels(Mat &data, vector< vector<int> > &label)
 /*
 	This function outputs a 2d vector label which 
 	has information about label of each pixel
@@ -91,6 +91,8 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
 				trainfile << example;
 			}
 		}
+
+		trainfile.close();
 	}
 
 }
