@@ -65,10 +65,10 @@ void saveCallback(int state, void *userdata)
 {
     Mat *image = (Mat*) userdata;
     vector< vector<int> > labels;
-    getLabels(*dataptr,labels);
-    
-    generateTrainFile(filename, getExamples(*image,labels));
-    
+    getLabels(*dataptr, labels);
+
+    writeExamples(filename, *image, labels);
+
 }
 
 int main(int argc, char** argv)
@@ -91,8 +91,8 @@ int main(int argc, char** argv)
         return -1;
     }
 
-//    namedWindow("Display window", WINDOW_AUTOSIZE); // Create a window for display.
-//    imshow("Display window", image); // Show our image inside it.
+    //    namedWindow("Display window", WINDOW_AUTOSIZE); // Create a window for display.
+    //    imshow("Display window", image); // Show our image inside it.
 
     Mat denoised;
     fastNlMeansDenoisingColored(image, denoised);
@@ -100,13 +100,13 @@ int main(int argc, char** argv)
     namedWindow("Denoised image", 1);
     setMouseCallback("Denoised image", CallBackFunc, &denoised);
     imshow("Denoised image", denoised);
-//    namedWindow("Data",1);
-        
-    cvCreateButton("Save",saveCallback,&denoised);
+    //    namedWindow("Data",1);
+
+    cvCreateButton("Save", saveCallback, &denoised);
     while (1)
     {
         imshow("Denoised image", denoised);
-//        imshow("Data",data);
+        //        imshow("Data",data);
         if (waitKey(100) == 27)
             break;
     }
