@@ -23,6 +23,7 @@ using namespace cv;
  */
 bool lbutton = 0;
 //bool ctrl_key_state=0;
+Mat *dataptr;
 
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
@@ -40,15 +41,25 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
     else if (event == EVENT_MOUSEMOVE)
     {
         cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
-        if(flags == EVENT_FLAG_CTRLKEY)
+        if (flags == EVENT_FLAG_CTRLKEY) //yellow
         {
-            
-            circle(*image,Point(x,y),4,Scalar(0,255,255),-1);
+            circle(*image, Point(x, y), 4, Scalar(0, 255, 255), -1);
+            circle(*dataptr, Point(x, y), 4, Scalar(0, 255, 255), -1);
+        }
+        else if (flags == EVENT_FLAG_ALTKEY) //red
+        {
+            circle(*image, Point(x, y), 4, Scalar(0, 0, 255), -1);
+            circle(*dataptr, Point(x, y), 4, Scalar(0, 0, 255), -1);
+        }
+        else if (flags == EVENT_FLAG_SHIFTKEY) //green
+        {
+            circle(*image, Point(x, y), 4, Scalar(0, 255, 0), -1);
+            circle(*dataptr, Point(x, y), 4, Scalar(0, 255, 0), -1);
         }
     }
-    
-    
-    
+
+
+
 
 }
 
@@ -62,15 +73,16 @@ int main(int argc, char** argv)
 
     Mat image;
     image = imread(argv[1], CV_LOAD_IMAGE_COLOR); // Read the file
-
+    Mat data(image.rows, image.cols, CV_8UC3);
+    dataptr = &data;
     if (!image.data) // Check for invalid input
     {
         cout << "Could not open or find the image" << std::endl;
         return -1;
     }
 
-    namedWindow("Display window", WINDOW_AUTOSIZE); // Create a window for display.
-    imshow("Display window", image); // Show our image inside it.
+//    namedWindow("Display window", WINDOW_AUTOSIZE); // Create a window for display.
+//    imshow("Display window", image); // Show our image inside it.
 
     Mat denoised;
     fastNlMeansDenoisingColored(image, denoised);
@@ -78,14 +90,17 @@ int main(int argc, char** argv)
     namedWindow("Denoised image", 1);
     setMouseCallback("Denoised image", CallBackFunc, &denoised);
     imshow("Denoised image", denoised);
-    while(1)
+//    namedWindow("Data",1);
+        
+    cvCreateButton("Save",NULL,NULL);
+    while (1)
     {
         imshow("Denoised image", denoised);
-        if(waitKey(50) == 27)
+//        imshow("Data",data);
+        if (waitKey(100) == 27)
             break;
-            
     }
-    
+
     return 0;
 }
 
