@@ -45,60 +45,52 @@ void getLabels(Mat &data, vector<vector<int>> &label)
 	}
 }
 
-string getExamples(Mat image, vector<vector<int>> label)
+
+void writeExamples(String filename, Mat image, vector < vector<int> > label)
 /*
-	This function outputs a string which contains examples
-	for boosting algorithm based on H, S, V, and Labels
-
-	##Each example is in the form Label, H, S, V;
+	This function writes every pixel attributes to specified 
+	text file	
 */
-{	
-	String example = "";
-	Mat hsv_image;
-	ostringstream ss;
-	cvtColor(image, hsv_image, CV_BGR2HSV);
-	for (int i = 0; i < hsv_image.rows; ++i)
-	{
-		for (int j = 0; j < hsv_image.cols; ++j)
+{
+	ofstream trainfile(filename.c_str());
+	if(!trainfile.is_open())
+		cout << "Error opening " <<  filename <<".txt file";
+
+	else
+	{ 
+		String example = "";
+		Mat hsv_image;
+		ostringstream ss;
+		cvtColor(image, hsv_image, CV_BGR2HSV);
+		for (int i = 0; i < hsv_image.rows; ++i)
 		{
-			Vec3b hsv = hsv_image.at<Vec3b>(Point(i, j));
+			for (int j = 0; j < hsv_image.cols; ++j)
+			{
+				example = "";
 
-			ss << label[i][j];
-			example += ss.str(); // Append label
-			example += ",";
+				Vec3b hsv = hsv_image.at<Vec3b>(Point(i, j));
 
-			ss << hsv[0];
-			example += ss.str(); // Append H value
-			example += ",";
+				ss << label[i][j];
+				example += ss.str(); // Append label
+				example += ",";
 
-			ss << hsv[1];
-			example += ss.str(); // Append S value
-			example += ",";
+				ss << hsv[0];
+				example += ss.str(); // Append H value
+				example += ",";
 
-			ss << hsv[2];
-			example += ss.str(); // Append V value
-			example += ";";
+				ss << hsv[1];
+				example += ss.str(); // Append S value
+				example += ",";
+
+				ss << hsv[2];
+				example += ss.str(); // Append V value
+				example += ";";
+
+				example += "\n";
+
+				trainfile << example;
+			}
 		}
 	}
 
-	return example;
-}
-
-void generateTrainFile(vector<string> examples)
-/*
-	This function writes all strings into one train file for boosting	
-*/
-{
-	ofstream trainfile("buoy.train");
-
-	if(trainfile.is_open())
-	{
-		for (vector<string>::iterator i = examples.begin(); i != examples.end(); ++i)
-			trainfile << *i;
-
-		trainfile.close();
-	}
-
-	else
-		cout << "There is a problem opening this file !" << endl;
 }
