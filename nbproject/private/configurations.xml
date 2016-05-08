@@ -17,8 +17,6 @@
           <df name="src">
           </df>
         </df>
-        <df name="Progress">
-        </df>
       </df>
       <df name="src">
         <in>helper.cpp</in>

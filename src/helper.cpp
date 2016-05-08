@@ -90,6 +90,7 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
                 trainfile << example;
             }
         }
+        trainfile.close();
     }
 
 }
