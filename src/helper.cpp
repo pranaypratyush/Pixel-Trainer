@@ -30,7 +30,7 @@ void getLabels(Mat &data, vector< vector<int> > &label)
         for (int j = 0; j < data.cols; ++j)
         {
             Vec3b Color = data.at<Vec3b>(Point(i, j));
-
+//            cout << "i="<< i <<" j="<<j<<"  "<< (int)Color[0]<<" "<< (int)Color[1]<< " "<< (int)Color[2]<<endl;
             if (Color[0] == 0 && Color[1] == 255 && Color[2] == 255) // Yellow pixel
                 label[i].push_back(0);
 

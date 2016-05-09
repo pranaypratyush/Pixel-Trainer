@@ -78,7 +78,8 @@ void clearCallback(int state, void *userdata)
     Mat *image = (Mat*) userdata;
     denoised.copyTo(*image);
     Mat newimage(image->rows, image->cols, CV_8UC3,Scalar(0,0,0));
-    *dataptr = newimage;
+//    *dataptr = newimage;
+    newimage.copyTo(*dataptr);
 }
 
 void trackbarCallback(int , void* )
