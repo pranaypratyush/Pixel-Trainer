@@ -14,3 +14,6 @@ In labelling involves pressing a key and left clicking and dragging the mouse
 * For labelling Yellow press Crtl key 
 * For labelling Green press Shift key 
 * For labelling Red press Alt key
+
+The brush size or labelling area can be changed using the given trackbar.
+To Save or Clear ,use the brush icon in the taskbar.
