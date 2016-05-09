@@ -27,6 +27,7 @@ string filename;
 Mat denoised;
 //bool ctrl_key_state=0;
 Mat *dataptr;
+int brush_radius = 4;
 
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
@@ -46,18 +47,18 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 //        cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
         if (flags == EVENT_FLAG_CTRLKEY) //yellow
         {
-            circle(*image, Point(x, y), 4, Scalar(0, 255, 255), -1);
-            circle(*dataptr, Point(x, y), 4, Scalar(0, 255, 255), -1);
+            circle(*image, Point(x, y), brush_radius, Scalar(0, 255, 255), -1);
+            circle(*dataptr, Point(x, y), brush_radius, Scalar(0, 255, 255), -1);
         }
         else if (flags == EVENT_FLAG_ALTKEY) //red
         {
-            circle(*image, Point(x, y), 4, Scalar(0, 0, 255), -1);
-            circle(*dataptr, Point(x, y), 4, Scalar(0, 0, 255), -1);
+            circle(*image, Point(x, y), brush_radius, Scalar(0, 0, 255), -1);
+            circle(*dataptr, Point(x, y), brush_radius, Scalar(0, 0, 255), -1);
         }
         else if (flags == EVENT_FLAG_SHIFTKEY) //green
         {
-            circle(*image, Point(x, y), 4, Scalar(0, 255, 0), -1);
-            circle(*dataptr, Point(x, y), 4, Scalar(0, 255, 0), -1);
+            circle(*image, Point(x, y), brush_radius, Scalar(0, 255, 0), -1);
+            circle(*dataptr, Point(x, y), brush_radius, Scalar(0, 255, 0), -1);
         }
     }
 }
@@ -76,8 +77,13 @@ void clearCallback(int state, void *userdata)
 {
     Mat *image = (Mat*) userdata;
     denoised.copyTo(*image);
-    Mat newimage(image->rows, image->cols, CV_8UC3);
+    Mat newimage(image->rows, image->cols, CV_8UC3,Scalar(0,0,0));
     *dataptr = newimage;
+}
+
+void trackbarCallback(int , void* )
+{
+    
 }
 
 int main(int argc, char** argv)
@@ -92,7 +98,7 @@ int main(int argc, char** argv)
     image = imread(argv[1], CV_LOAD_IMAGE_COLOR); // Read the file
     filename = argv[1];
     
-    Mat data(image.rows, image.cols, CV_8UC3);
+    Mat data(image.rows, image.cols, CV_8UC3,Scalar(0,0,0));
     dataptr = &data;
     if (!image.data) // Check for invalid input
     {
@@ -114,6 +120,7 @@ int main(int argc, char** argv)
 
     cvCreateButton("Save", saveCallback, &displayedMat);
     cvCreateButton("Clear",clearCallback,&displayedMat);
+    createTrackbar("Brush radius","Denoised image",&brush_radius,15,trackbarCallback);
     while (1)
     {
         imshow("Denoised image", displayedMat);

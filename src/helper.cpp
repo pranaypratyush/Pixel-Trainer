@@ -29,7 +29,7 @@ void getLabels(Mat &data, vector< vector<int> > &label)
         label.push_back(vector<int>());
         for (int j = 0; j < data.cols; ++j)
         {
-            Vec3b &Color = data.at<Vec3b>(Point(i, j));
+            Vec3b Color = data.at<Vec3b>(Point(i, j));
 
             if (Color[0] == 0 && Color[1] == 255 && Color[2] == 255) // Yellow pixel
                 label[i].push_back(0);
