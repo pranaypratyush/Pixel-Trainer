@@ -1,10 +1,10 @@
-# Pixel master
+# Pixel Trainer
 
-Pixel master is software used to label each pixel of images like bouy.Labeling can be done soomthly by draging the mouse.The labels are :-
+Pixel Trainer is software used to label each pixel of images like bouy.Labeling can be done soomthly by draging the mouse.The labels are :-
 
  -  0  for Yellow  
  -  1 for  Green
- - 2 for Red
+ -  2 for Red
  - -1 : Default
  
 For each image a text file is generated containing the labelling and HSV value of each Pixel
