@@ -1,6 +1,6 @@
 # Pixel Trainer
 
-Pixel Trainer is software used to label each pixel of images like bouy.Labeling can be done soomthly by draging the mouse.The labels are :-
+Pixel Trainer is a software used to label each pixel of images like bouy.Labeling can be done soomthly by draging the mouse.The labels are :-
 
  -  0  for Yellow  
  -  1 for  Green
@@ -17,3 +17,5 @@ In labelling involves pressing a key and left clicking and dragging the mouse
 
 The brush size or labelling area can be changed using the given trackbar.
 To Save or Clear ,use the brush icon in the taskbar.
+
+The `main_static` file is the "statified" version of the `main` binary. It has all dynamic linkages statified and therefore would run on systems without 'opencv-3.1.0' installed.
