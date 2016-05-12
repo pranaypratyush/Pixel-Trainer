@@ -1,3 +1,6 @@
+#ifndef HELPER_H
+#define HELPER_H
+
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <sstream>
@@ -102,3 +105,5 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
     }
 
 }
+#endif	// HELPER_H
+

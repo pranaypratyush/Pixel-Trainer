@@ -1,1 +1,3 @@
+/home/pranay/Desktop/OpencvProject/CMakeFiles/rebuild_cache.dir
+/home/pranay/Desktop/OpencvProject/CMakeFiles/edit_cache.dir
 /home/pranay/Desktop/OpencvProject/CMakeFiles/main.dir

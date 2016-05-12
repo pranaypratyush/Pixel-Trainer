@@ -119,7 +119,7 @@ int main(int argc, char** argv)
     imshow("Denoised image", denoised);
     //    namedWindow("Data",1);
 
-    cvCreateButton("Save", saveCallback, &displayedMat);
+    cvCreateButton("Save", saveCallback, &denoised);
     cvCreateButton("Clear",clearCallback,&displayedMat);
     createTrackbar("Brush radius","Denoised image",&brush_radius,15,trackbarCallback);
     while (1)

@@ -27,6 +27,10 @@
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0"
+                 commonFlags="-mtune=generic -march=x86-64 -fstack-protector"/>
+      </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
       <makefileType>
@@ -37,7 +41,15 @@
           <executablePath>/home/pranay/Desktop/OpencvProject/main</executablePath>
           <ccTool>
             <incDir>
-              <pElem>/usr/include/opencv</pElem>
+              <pElem>/usr/include/opencv2/core</pElem>
+              <pElem>src</pElem>
+              <pElem>/usr/include/opencv2/core/hal</pElem>
+              <pElem>/usr/include/opencv2</pElem>
+              <pElem>/usr/include/opencv2/flann</pElem>
+              <pElem>/usr/include/opencv2/imgproc</pElem>
+              <pElem>/usr/include/opencv2/imgcodecs</pElem>
+              <pElem>/usr/include/opencv2/videoio</pElem>
+              <pElem>/usr/include/opencv2/highgui</pElem>
               <pElem>.</pElem>
             </incDir>
           </ccTool>
@@ -51,6 +63,8 @@
             ex="false"
             tool="1"
             flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
       </item>
     </conf>
   </confs>

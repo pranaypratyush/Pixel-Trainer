@@ -18,4 +18,4 @@ In labelling involves pressing a key and left clicking and dragging the mouse
 The brush size or labelling area can be changed using the given trackbar.
 To Save or Clear ,use the brush icon in the taskbar.
 
-The `main_static` file is the "statified" version of the `main` binary. It has all dynamic linkages statified and therefore would run on systems without 'opencv-3.1.0' installed.
+The `main_static` file is the "statified" version of the `main` binary. It has all dynamic linkages statified and therefore would run on systems without 'opencv-3.1.0' installed. This was done using `ErmineLight`.
