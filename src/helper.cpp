@@ -32,7 +32,7 @@ void getLabels(Mat &data, vector< vector<int> > &label)
         label.push_back(vector<int>());
         for (int j = 0; j < data.cols; ++j)
         {
-            Vec3b Color = data.at<Vec3b>(Point(i, j));
+            Vec3b &Color = data.at<Vec3b>(i, j);
 //            cout << "i="<< i <<" j="<<j<<"  "<< (int)Color[0]<<" "<< (int)Color[1]<< " "<< (int)Color[2]<<endl;
             if (Color[0] == 0 && Color[1] == 255 && Color[2] == 255) // Yellow pixel
                 label[i].push_back(0);
@@ -72,27 +72,27 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
             {
                 example = "";
 
-                Vec3b hsv = hsv_image.at<Vec3b>(i, j);
+                Vec3b &hsv = hsv_image.at<Vec3b>(i, j);
                 ss.str("");
 
                 ss << label[i][j];
                 example += ss.str(); // Append label
-                example += ",";
+                example += "|h: ";
                 ss.str("");
 
                 ss << (int)hsv[0];
                 example += ss.str(); // Append H value
-                example += ",";
+                example += " s: ";
                 ss.str("");
 
                 ss << (int)hsv[1];
                 example += ss.str(); // Append S value
-                example += ",";
+                example += " v: ";
                 ss.str("");
                 
                 ss << (int)hsv[2];
                 example += ss.str(); // Append V value
-                example += ";";
+//                example += "";
 //                ss.str("");
                 
                 example += "\n";
