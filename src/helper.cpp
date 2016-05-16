@@ -35,16 +35,16 @@ void getLabels(Mat &data, vector< vector<int> > &label)
             Vec3b &Color = data.at<Vec3b>(i, j);
 //            cout << "i="<< i <<" j="<<j<<"  "<< (int)Color[0]<<" "<< (int)Color[1]<< " "<< (int)Color[2]<<endl;
             if (Color[0] == 0 && Color[1] == 255 && Color[2] == 255) // Yellow pixel
-                label[i].push_back(0);
-
-            else if (Color[0] == 0 && Color[1] == 255 && Color[2] == 0) // GREEN pixel
-                label[i].push_back(1);
-
-            else if (Color[0] == 0 && Color[1] == 0 && Color[2] == 255) // RED pixel
                 label[i].push_back(2);
 
+            else if (Color[0] == 0 && Color[1] == 255 && Color[2] == 0) // GREEN pixel
+                label[i].push_back(3);
+
+            else if (Color[0] == 0 && Color[1] == 0 && Color[2] == 255) // RED pixel
+                label[i].push_back(4);
+
             else // BLACK pixel
-                label[i].push_back(-1);
+                label[i].push_back(1);
         }
     }
 }
@@ -77,17 +77,17 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
 
                 ss << label[i][j];
                 example += ss.str(); // Append label
-                example += "|h: ";
+                example += " | ";
                 ss.str("");
 
                 ss << (int)hsv[0];
                 example += ss.str(); // Append H value
-                example += " s: ";
+                example += " ";
                 ss.str("");
 
                 ss << (int)hsv[1];
                 example += ss.str(); // Append S value
-                example += " v: ";
+                example += " ";
                 ss.str("");
                 
                 ss << (int)hsv[2];
