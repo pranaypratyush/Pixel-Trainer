@@ -101,6 +101,16 @@ void writeExamples(String filename, Mat image, vector < vector<int> > label)
             }
             cout << "i ="<<i<<" finished"<<endl;
         }
+        example = "2 | 60 100 100";
+        trainfile<<example;
+        example = "4 | 0 100 100";
+        trainfile<<example;
+        example = "3 | 120 100 100";
+        trainfile<<example;
+        example = "1 | 240 100 100";
+        trainfile<<example;
+        example = "1 | 0 0 0";
+        trainfile<<example;
         trainfile.close();
     }
 

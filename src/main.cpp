@@ -111,7 +111,7 @@ int main(int argc, char** argv)
     //    imshow("Display window", image); // Show our image inside it.
 
     
-    fastNlMeansDenoisingColored(image, denoised);
+    fastNlMeansDenoisingColored(image, denoised,4,7,21);
     Mat displayedMat;
     denoised.copyTo(displayedMat);
     namedWindow("Denoised image", 1);
