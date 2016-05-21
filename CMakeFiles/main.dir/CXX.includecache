@@ -27,6 +27,8 @@ opencv2/opencv.hpp
 -
 opencv2/highgui/highgui.hpp
 -
+string
+-
 helper.cpp
 /home/pranay/Desktop/OpencvProject/src/helper.cpp
 
